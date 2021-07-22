@@ -1,0 +1,12 @@
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+
+export const SET_MESSAGE = "SET_MESSAGE";
+export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const CREATE_DEVICE = "CREATE_DEVICE";
+export const RETRIEVE_DEVICES = "RETRIEVE_DEVICES";
+export const UPDATE_DEVICE = "UPDATE_DEVICE";
+export const DELETE_DEVICE = "DELETE_DEVICE";
+export const DELETE_ALL_DEVICES = "DELETE_ALL_DEVICES";
