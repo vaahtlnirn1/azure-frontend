@@ -16,7 +16,7 @@ const Device = (props) => {
     const dispatch = useDispatch();
 
     const getDevice = id => {
-        DeviceDataService.retrieveDevices(id)
+        DeviceDataService.retrieveDevice(id)
             .then(response => {
                 setCurrentDevice(response.data);
                 console.log(response.data);
@@ -70,7 +70,7 @@ const Device = (props) => {
     const removeDevice = () => {
         dispatch(deleteDevice(currentDevice.id))
             .then(() => {
-                props.history.push("devices");
+                props.history.push("/devices");
             })
             .catch(e => {
                 console.log(e);
@@ -116,27 +116,27 @@ const Device = (props) => {
 
                     {currentDevice.published ? (
                         <button
-                            className="badge badge-primary mr-2"
+                            className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(false)}
                         >
                             UnPublish
                         </button>
                     ) : (
                         <button
-                            className="badge badge-primary mr-2"
+                            className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(true)}
                         >
                             Publish
                         </button>
                     )}
 
-                    <button className="badge badge-danger mr-2" onClick={removeDevice}>
+                    <button className="m-3 btn btn-sm btn-danger" onClick={removeDevice}>
                         Delete
                     </button>
 
                     <button
                         type="submit"
-                        className="badge badge-success"
+                        className="btn btn-success"
                         onClick={updateContent}
                     >
                         Update

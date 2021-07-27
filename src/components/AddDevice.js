@@ -82,7 +82,7 @@ const AddDevice = () => {
                     </div>
 
                     <button onClick={saveDevice} className="btn btn-success">
-                        Submit
+                        Add
                     </button>
                 </div>
             )}
