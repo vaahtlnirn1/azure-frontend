@@ -59,8 +59,8 @@ const Device = (props) => {
         dispatch(updateDevice(currentDevice.id, currentDevice))
             .then(response => {
                 console.log(response);
-
                 setMessage("The device was updated successfully!");
+                props.history.push("/devices");
             })
             .catch(e => {
                 console.log(e);

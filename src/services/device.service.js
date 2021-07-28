@@ -4,38 +4,38 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:3000/";
 
 const retrieveDevices = () => {
-    return axios.get(API_URL + "devices", { headers: authHeader() });
+    return axios.get(API_URL + "devices", { headers: authHeader(), "Content-type": "application/json" });
 };
 
-const retrieveDevice = () => {
+const retrieveDevice = id => {
     // eslint-disable-next-line
-    return axios.get(API_URL + "devices/${id}", { headers: authHeader() });
+    return axios.get(API_URL + "devices/${id}", { headers: authHeader(), "Content-type": "application/json" });
 };
 
-const createDevice = () => {
-    return axios.post(API_URL + "devices", { headers: authHeader() });
+const createDevice = data => {
+    return axios.post(API_URL + "devices", { headers: authHeader(), "Content-type": "application/json", data });
 };
 
-const updateDevice = () => {
+const updateDevice = (id, data) => {
     // eslint-disable-next-line
-    return axios.put(API_URL + "device/{$id}", { headers: authHeader() });
+    return axios.put(API_URL + "device/${id}", { headers: authHeader(), "Content-type": "application/json", data });
 };
 
-const deleteDevice = () => {
+const deleteDevice = id => {
     // eslint-disable-next-line
-    return axios.delete(API_URL + "device/{$id}", { headers: authHeader() });
+    return axios.delete(API_URL + "device/${id}", { headers: authHeader(), "Content-type": "application/json" });
 };
 
 const deleteAllDevices = () => {
-    return axios.delete(API_URL + "devices", { headers: authHeader() });
+    return axios.delete(API_URL + "devices", { headers: authHeader(), "Content-type": "application/json" });
 };
 
-const findDevicesByTitle = () => {
+const findDevicesByTitle = title => {
     // eslint-disable-next-line
-    return axios.get(API_URL + "devices?title=${title}", { headers: authHeader() });
+    return axios.get(API_URL + "devices?title=${title}", { headers: authHeader(), "Content-type": "application/json" });
 };
 
-const DeviceDataService = {
+const DeviceService = {
     retrieveDevices,
     retrieveDevice,
     createDevice,
@@ -45,4 +45,4 @@ const DeviceDataService = {
     findDevicesByTitle
 };
 
-export default DeviceDataService;
+export default DeviceService;
