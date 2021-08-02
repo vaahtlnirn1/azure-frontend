@@ -16,7 +16,7 @@ export const createDevice = (title, detail) => async (dispatch) => {
             type: CREATE_DEVICE,
             payload: res.data,
         });
-
+        console.log(res.data);
         return Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err);

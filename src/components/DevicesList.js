@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     retrieveDevices,
     findDevicesByTitle,
+    deleteDevice,
     deleteAllDevices,
 } from "../actions/devices";
 import { Link } from "react-router-dom";
@@ -35,6 +36,16 @@ const DevicesList = () => {
         setCurrentIndex(index);
     };
 
+    const removeDevice = (props) => {
+        dispatch(deleteDevice(currentDevice.id))
+            .then(() => {
+                props.history.push("/devices");
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
     const removeAllDevices = () => {
         dispatch(deleteAllDevices())
             .then(response => {
@@ -49,6 +60,7 @@ const DevicesList = () => {
     const findByTitle = () => {
         refreshData();
         dispatch(findDevicesByTitle(searchTitle));
+        console.log(searchTitle);
     };
 
     return (
@@ -118,7 +130,7 @@ const DevicesList = () => {
                             <label>
                                 <strong>Status:</strong>
                             </label>{" "}
-                            {currentDevice.published ? "Published" : "Pending"}
+                            {currentDevice.published ? "Online" : "Offline"}
                         </div>
 
                         <Link
@@ -127,6 +139,9 @@ const DevicesList = () => {
                         >
                             Edit
                         </Link>
+                        <button className="m-3 btn btn-sm btn-danger" onClick={removeDevice}>
+                            Delete
+                        </button>
                     </div>
                 ) : (
                     <div>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import {Router, Switch, Route, Link, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -20,6 +19,7 @@ import { clearMessage } from "./actions/message";
 import { history } from "./helpers/history";
 
 const App = () => {
+    // eslint-disable-next-line
     const [showModeratorPage, setShowModeratorPage] = useState(false);
     const [showAdminPage, setShowAdminPage] = useState(false);
 
@@ -34,8 +34,8 @@ const App = () => {
 
     useEffect(() => {
         if (currentUser) {
-            setShowModeratorPage(currentUser.roles && currentUser.roles.includes("ROLE_PM"));
-            setShowAdminPage(currentUser.roles && currentUser.roles.includes("ROLE_ADMIN"));
+            setShowModeratorPage(currentUser.roles && currentUser.roles.includes("PM" && "ADMIN"));
+            setShowAdminPage(currentUser.roles && currentUser.roles.includes("ADMIN"));
         }
     }, [currentUser]);
 
@@ -47,24 +47,38 @@ const App = () => {
         <Router history={history}>
             <div>
                 <nav className="navbar navbar-expand navbar-dark bg-dark">
-                    <Link to={"/"} className="navbar-brand">
-                        Device Central
+                    <Link to={"/dashboard"} className="navbar-brand">
+                        Device Base
                     </Link>
                     <div className="navbar-nav mr-auto">
+                        {currentUser && (
                         <li className="nav-item">
                             <Link to={"/"} className="nav-link">
                                 Home
                             </Link>
                         </li>
-
-                        {showModeratorPage && (
+                        )}
+                        {currentUser && (
                             <li className="nav-item">
-                                <Link to={"/pm"} className="nav-link">
-                                    Moderator Page
+                                <Link to={"/devices"} className="nav-link">
+                                    Devices
+                              </Link>
+                            </li>
+                        )}
+                        {(currentUser && currentUser.roles && ((currentUser.roles.includes("ADMIN")) || (currentUser.roles.includes("PM")))) && (
+                        <li className="nav-item">
+                            <Link to={"/add"} className="nav-link">
+                                Add Device
+                            </Link>
+                        </li>
+                        )}
+                        {currentUser && (
+                            <li className="nav-item">
+                                <Link to={"/dashboard"} className="nav-link">
+                                    My Dashboard
                                 </Link>
                             </li>
                         )}
-
                         {showAdminPage && (
                             <li className="nav-item">
                                 <Link to={"/admin"} className="nav-link">
@@ -72,7 +86,13 @@ const App = () => {
                                 </Link>
                             </li>
                         )}
-
+                        {(currentUser && currentUser.roles && ((currentUser.roles.includes("ADMIN")) || (currentUser.roles.includes("PM")))) && (
+                            <li className="nav-item">
+                                <Link to={"/pm"} className="nav-link">
+                                    Moderator Page
+                                </Link>
+                            </li>
+                        )}
                         {currentUser && (
                             <li className="nav-item">
                                 <Link to={"/user"} className="nav-link">
@@ -85,31 +105,6 @@ const App = () => {
                     {currentUser ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link to={"/pm"} className="nav-link">
-                                    Moderator Page
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/admin"} className="nav-link">
-                                    Admin Page
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/dashboard"} className="nav-link">
-                                    My Dashboard
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/devices"} className="nav-link">
-                                    Devices
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/add"} className="nav-link">
-                                    Add Device
-                                </Link>
-                            </li>
-                            <li className="nav-item">
                                 <a href="/signin" className="nav-link" onClick={logOut}>
                                     Log Out
                                 </a>
@@ -117,6 +112,9 @@ const App = () => {
                         </div>
                     ) : (
                         <div className="navbar-nav ml-auto">
+                            <Redirect strict from="/" to="/signin" />
+                            <Route path="/signin">
+                            </Route>
                             <li className="nav-item">
                                 <Link to={"/signin"} className="nav-link">
                                     Login
@@ -135,7 +133,7 @@ const App = () => {
                         <Route path="/admin" component={AdminPage} />
                         <Route exact path="/devices" component={DevicesList} />
                         <Route exact path="/add" component={AddDevice} />
-                        <Route path="/device/:id" component={Device} />
+                        <Route exact path="/device/:id" component={Device} />
                     </Switch>
                 </div>
             </div>

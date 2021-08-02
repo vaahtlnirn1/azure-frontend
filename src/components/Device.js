@@ -110,7 +110,7 @@ const Device = (props) => {
                             <label>
                                 <strong>Status:</strong>
                             </label>
-                            {currentDevice.published ? "Published" : "Pending"}
+                            {currentDevice.published ? "Online" : "Offline"}
                         </div>
                     </form>
 
@@ -119,14 +119,14 @@ const Device = (props) => {
                             className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(false)}
                         >
-                            UnPublish
+                            Switch Off
                         </button>
                     ) : (
                         <button
                             className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(true)}
                         >
-                            Publish
+                            Switch On
                         </button>
                     )}
 
