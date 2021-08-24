@@ -6,9 +6,9 @@ import DeviceDataService from "../services/device.service";
 const Device = (props) => {
     const initialDeviceState = {
         id: null,
-        title: "",
-        detail: "",
-        published: false
+        deviceId: "",
+        description: "",
+        devStatus: true
     };
     const [currentDevice, setCurrentDevice] = useState(initialDeviceState);
     const [message, setMessage] = useState("");
@@ -38,16 +38,16 @@ const Device = (props) => {
     const updateStatus = status => {
         const data = {
             id: currentDevice.id,
-            title: currentDevice.title,
-            detail: currentDevice.detail,
-            published: status
+            deviceId: currentDevice.deviceId,
+            description: currentDevice.description,
+            devStatus: status
         };
 
         dispatch(updateDevice(currentDevice.id, data))
             .then(response => {
                 console.log(response);
 
-                setCurrentDevice({ ...currentDevice, published: status });
+                setCurrentDevice({ ...currentDevice, devStatus: status });
                 setMessage("The status was updated successfully!");
             })
             .catch(e => {
@@ -84,24 +84,19 @@ const Device = (props) => {
                     <h4>Device</h4>
                     <form>
                         <div className="form-group">
-                            <label htmlFor="title">Title</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                id="title"
-                                name="title"
-                                value={currentDevice.title}
-                                onChange={handleInputChange}
-                            />
+                            <label>
+                                <strong>Device ID:</strong>
+                            </label>
+                            {currentDevice.deviceId}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="detail">Detail</label>
+                            <label htmlFor="description">Description</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="detail"
-                                name="detail"
-                                value={currentDevice.detail}
+                                id="description"
+                                name="description"
+                                value={currentDevice.description}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -110,23 +105,23 @@ const Device = (props) => {
                             <label>
                                 <strong>Status:</strong>
                             </label>
-                            {currentDevice.published ? "Online" : "Offline"}
+                            {currentDevice.devStatus ? "Enabled" : "Disabled"}
                         </div>
                     </form>
 
-                    {currentDevice.published ? (
+                    {currentDevice.devStatus ? (
                         <button
                             className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(false)}
                         >
-                            Switch Off
+                            Disable
                         </button>
                     ) : (
                         <button
                             className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(true)}
                         >
-                            Switch On
+                            Enable
                         </button>
                     )}
 
@@ -146,7 +141,7 @@ const Device = (props) => {
             ) : (
                 <div>
                     <br />
-                    <p>Please click on a device.</p>
+                    <p>Click a device to expand options</p>
                 </div>
             )}
         </div>

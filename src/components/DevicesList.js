@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     retrieveDevices,
+    retrieveSyncDevices,
     findDevicesByTitle,
     deleteDevice,
-    deleteAllDevices,
+//    deleteAllDevices,
 } from "../actions/devices";
 import { Link } from "react-router-dom";
 
@@ -20,6 +21,7 @@ const DevicesList = () => {
         dispatch(retrieveDevices());
         // eslint-disable-next-line
     }, []);
+
 
     const onChangeSearchTitle = e => {
         const searchTitle = e.target.value;
@@ -46,7 +48,7 @@ const DevicesList = () => {
             });
     };
 
-    const removeAllDevices = () => {
+ /*   const removeAllDevices = () => {
         dispatch(deleteAllDevices())
             .then(response => {
                 console.log(response);
@@ -55,7 +57,7 @@ const DevicesList = () => {
             .catch(e => {
                 console.log(e);
             });
-    };
+    };    */
 
     const findByTitle = () => {
         refreshData();
@@ -98,17 +100,18 @@ const DevicesList = () => {
                             onClick={() => setActiveDevice(device, index)}
                             key={index}
                         >
-                            {device.title}
+                            {device.deviceId}
                         </li>
                     ))}
                 </ul>
-
+                <Link to="/devices">
                 <button
-                    className="m-3 btn btn-sm btn-danger"
-                    onClick={removeAllDevices}
+                    className="btn btn-success"
+                    onClick={retrieveSyncDevices}
                 >
-                    Remove All
+                    Sync Devices from IoT Hub
                 </button>
+                </Link>
             </div>
             <div className="col-md-6">
                 {currentDevice ? (
@@ -116,21 +119,21 @@ const DevicesList = () => {
                         <h4>Device</h4>
                         <div>
                             <label>
-                                <strong>Title:</strong>
+                                <strong>Device ID:</strong>
                             </label>{" "}
-                            {currentDevice.title}
+                            {currentDevice.deviceId}
                         </div>
                         <div>
                             <label>
-                                <strong>Detail:</strong>
+                                <strong>Description:</strong>
                             </label>{" "}
-                            {currentDevice.detail}
+                            {currentDevice.description}
                         </div>
                         <div>
                             <label>
                                 <strong>Status:</strong>
                             </label>{" "}
-                            {currentDevice.published ? "Online" : "Offline"}
+                            {currentDevice.devStatus ? "Enabled" : "Disabled"}
                         </div>
 
                         <Link
@@ -146,7 +149,7 @@ const DevicesList = () => {
                 ) : (
                     <div>
                         <br />
-                        <p>Please click on a device.</p>
+                        <p>Click a device to expand options</p>
                     </div>
                 )}
             </div>

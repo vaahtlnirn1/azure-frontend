@@ -8,9 +8,9 @@ import {
 
 import DeviceDataService from "../services/device.service";
 
-export const createDevice = (title, detail) => async (dispatch) => {
+export const createDevice = (id, description) => async (dispatch) => {
     try {
-        const res = await DeviceDataService.createDevice({ title, detail });
+        const res = await DeviceDataService.createDevice({ id, description });
 
         dispatch({
             type: CREATE_DEVICE,
@@ -26,6 +26,19 @@ export const createDevice = (title, detail) => async (dispatch) => {
 export const retrieveDevices = () => async (dispatch) => {
     try {
         const res = await DeviceDataService.retrieveDevices();
+
+        dispatch({
+            type: RETRIEVE_DEVICES,
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const retrieveSyncDevices = () => async (dispatch) => {
+    try {
+        const res = await DeviceDataService.retrieveSyncDevices();
 
         dispatch({
             type: RETRIEVE_DEVICES,
@@ -79,9 +92,9 @@ export const deleteAllDevices = () => async (dispatch) => {
     }
 };
 
-export const findDevicesByTitle = (title) => async (dispatch) => {
+export const findDevicesByTitle = (deviceId) => async (dispatch) => {
     try {
-        const res = await DeviceDataService.findDevicesByTitle(title);
+        const res = await DeviceDataService.findDevicesByTitle(deviceId);
 
         dispatch({
             type: RETRIEVE_DEVICES,

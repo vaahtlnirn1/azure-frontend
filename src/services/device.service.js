@@ -4,41 +4,46 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:3000/";
 
 const retrieveDevices = () => {
-    return axios.get(API_URL + `devices`, { headers: authHeader(), "Content-Type": "application/json", "Accept": "application/json"  });
+    return axios.get(API_URL + `devices`, { headers: authHeader() });
+};
+
+const retrieveSyncDevices = () => {
+    return axios.put(API_URL + `devices`, { headers: authHeader() });
 };
 
 const retrieveDevice = id => {
     // eslint-disable-next-line
-    return axios.get(API_URL + `device/${id}`, { headers: authHeader(), "Content-Type": "application/json", "Accept": "application/json" });
+    return axios.get(API_URL + `device/${id}`, { headers: authHeader() });
 };
 
 const createDevice = data => {
     console.log(data);
-    return axios.post(API_URL + `devices`, data, { headers: authHeader(), "Content-Type": "text/plain", "Accept": "application/json" });
+    return axios.post(API_URL + `devices`, data, { headers: authHeader() });
 };
 
 const updateDevice = (id, data) => {
     console.log(id, data);
     // eslint-disable-next-line
-    return axios.put(API_URL + `device/${id}`, data, { headers: authHeader(), "Content-Type": "text/plain", "Accept": "application/json" });
+    return axios.put(API_URL + `device/${id}`, data, { headers: authHeader() });
 };
 
 const deleteDevice = id => {
     // eslint-disable-next-line
-    return axios.delete(API_URL + `device/${id}`, { headers: authHeader(), "Content-Type": "application/json", "Accept": "application/json" });
+    return axios.delete(API_URL + `device/${id}`, { headers: authHeader() });
 };
 
 const deleteAllDevices = () => {
-    return axios.delete(API_URL + `devices`, { headers: authHeader(), "Content-Type": "application/json", "Accept": "application/json" });
+    return axios.delete(API_URL + `devices`, { headers: authHeader() });
 };
 
-const findDevicesByTitle = title => {
+const findDevicesByTitle = deviceId => {
     // eslint-disable-next-line
-    return axios.get(API_URL + `devices?title=${title}`, { headers: authHeader(), "Content-Type": "application/json", "Accept": "application/json" });
+    return axios.get(API_URL + `devices?title=${deviceId}`, { headers: authHeader() });
 };
 
 const DeviceService = {
     retrieveDevices,
+    retrieveSyncDevices,
     retrieveDevice,
     createDevice,
     updateDevice,

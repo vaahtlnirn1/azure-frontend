@@ -5,9 +5,9 @@ import { createDevice } from "../actions/devices";
 const AddDevice = () => {
     const initialDeviceState = {
         id: null,
-        title: "",
-        detail: "",
-        published: false
+        deviceId: "",
+        description: "",
+        devStatus: true
     };
     const [device, setDevice] = useState(initialDeviceState);
     const [submitted, setSubmitted] = useState(false);
@@ -20,18 +20,17 @@ const AddDevice = () => {
     };
 
     const saveDevice = () => {
-        const { title, detail } = device;
+        const { deviceId, description } = device;
 
-        dispatch(createDevice(title, detail))
+        dispatch(createDevice(deviceId, description))
             .then(data => {
                 setDevice({
                     id: data.id,
-                    title: data.title,
-                    detail: data.detail,
-                    published: data.published
+                    deviceId: data.deviceId,
+                    description: data.description,
+                    devStatus: data.devStatus
                 });
                 setSubmitted(true);
-
                 console.log(data);
             })
             .catch(e => {
@@ -56,28 +55,28 @@ const AddDevice = () => {
             ) : (
                 <div>
                     <div className="form-group">
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="deviceId">Device ID</label>
                         <input
                             type="text"
                             className="form-control"
-                            id="title"
+                            id="deviceId"
                             required
-                            value={device.title}
+                            value={device.deviceId}
                             onChange={handleInputChange}
-                            name="title"
+                            name="deviceId"
                         />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="detail">Detail</label>
+                        <label htmlFor="description">Description</label>
                         <input
                             type="text"
                             className="form-control"
-                            id="detail"
+                            id="description"
                             required
-                            value={device.detail}
+                            value={device.description}
                             onChange={handleInputChange}
-                            name="detail"
+                            name="description"
                         />
                     </div>
 
