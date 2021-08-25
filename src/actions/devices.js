@@ -37,9 +37,10 @@ export const retrieveDevices = () => async (dispatch) => {
 };
 
 export const retrieveSyncDevices = () => async (dispatch) => {
+    console.log("retrieveSyncDevices")
     try {
         const res = await DeviceDataService.retrieveSyncDevices();
-
+        console.log("dispatching")
         dispatch({
             type: RETRIEVE_DEVICES,
             payload: res.data,
@@ -95,7 +96,7 @@ export const deleteAllDevices = () => async (dispatch) => {
 export const findDevicesByTitle = (deviceId) => async (dispatch) => {
     try {
         const res = await DeviceDataService.findDevicesByTitle(deviceId);
-
+        console.log("findDevicesByTitle dispatch")
         dispatch({
             type: RETRIEVE_DEVICES,
             payload: res.data,

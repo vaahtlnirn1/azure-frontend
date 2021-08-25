@@ -8,7 +8,8 @@ const retrieveDevices = () => {
 };
 
 const retrieveSyncDevices = () => {
-    return axios.put(API_URL + `devices`, { headers: authHeader() });
+    console.log(API_URL + `devices`)
+    return axios.put(API_URL + `devices`, null, { headers: authHeader() });
 };
 
 const retrieveDevice = id => {
@@ -38,7 +39,7 @@ const deleteAllDevices = () => {
 
 const findDevicesByTitle = deviceId => {
     // eslint-disable-next-line
-    return axios.get(API_URL + `devices?title=${deviceId}`, { headers: authHeader() });
+    return axios.get(API_URL + `devices?deviceId=${deviceId}`, { headers: authHeader() });
 };
 
 const DeviceService = {

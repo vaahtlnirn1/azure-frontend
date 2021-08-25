@@ -6,7 +6,7 @@ const AddDevice = () => {
     const initialDeviceState = {
         id: null,
         deviceId: "",
-        description: "",
+        freeDescription: "",
         devStatus: true
     };
     const [device, setDevice] = useState(initialDeviceState);
@@ -20,14 +20,14 @@ const AddDevice = () => {
     };
 
     const saveDevice = () => {
-        const { deviceId, description } = device;
+        const { deviceId, freeDescription } = device;
 
-        dispatch(createDevice(deviceId, description))
+        dispatch(createDevice(deviceId, freeDescription))
             .then(data => {
                 setDevice({
                     id: data.id,
                     deviceId: data.deviceId,
-                    description: data.description,
+                    freeDescription: data.freeDescription,
                     devStatus: data.devStatus
                 });
                 setSubmitted(true);
@@ -68,15 +68,15 @@ const AddDevice = () => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="description">Description</label>
+                        <label htmlFor="freeDescription">Description</label>
                         <input
                             type="text"
                             className="form-control"
-                            id="description"
+                            id="freeDescription"
                             required
-                            value={device.description}
+                            value={device.freeDescription}
                             onChange={handleInputChange}
-                            name="description"
+                            name="freeDescription"
                         />
                     </div>
 

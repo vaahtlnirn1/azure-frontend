@@ -5,7 +5,7 @@ import {
     retrieveSyncDevices,
     findDevicesByTitle,
     deleteDevice,
-//    deleteAllDevices,
+    deleteAllDevices,
 } from "../actions/devices";
 import { Link } from "react-router-dom";
 
@@ -38,6 +38,16 @@ const DevicesList = () => {
         setCurrentIndex(index);
     };
 
+    const retrieveSyncedDevices = () => {
+        dispatch(retrieveSyncDevices())
+            .then(() => {
+                refreshData();
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
     const removeDevice = (props) => {
         dispatch(deleteDevice(currentDevice.id))
             .then(() => {
@@ -48,7 +58,7 @@ const DevicesList = () => {
             });
     };
 
- /*   const removeAllDevices = () => {
+    const removeAllDevices = () => {
         dispatch(deleteAllDevices())
             .then(response => {
                 console.log(response);
@@ -57,7 +67,7 @@ const DevicesList = () => {
             .catch(e => {
                 console.log(e);
             });
-    };    */
+    };
 
     const findByTitle = () => {
         refreshData();
@@ -72,7 +82,7 @@ const DevicesList = () => {
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Search by title"
+                        placeholder="Search by Device ID"
                         value={searchTitle}
                         onChange={onChangeSearchTitle}
                     />
@@ -104,14 +114,19 @@ const DevicesList = () => {
                         </li>
                     ))}
                 </ul>
-                <Link to="/devices">
                 <button
                     className="btn btn-success"
-                    onClick={retrieveSyncDevices}
+                    onClick={retrieveSyncedDevices}
                 >
-                    Sync Devices from IoT Hub
+                    Synchronize With IoT Hub
                 </button>
-                </Link>
+
+                <button
+                    className="m-3 btn btn-sm btn-danger"
+                    onClick={removeAllDevices}
+                >
+                    Delete All Devices
+                </button>
             </div>
             <div className="col-md-6">
                 {currentDevice ? (
@@ -125,20 +140,20 @@ const DevicesList = () => {
                         </div>
                         <div>
                             <label>
-                                <strong>Description:</strong>
+                                <strong>Notes/Description:</strong>
                             </label>{" "}
-                            {currentDevice.description}
+                            {currentDevice.freeDescription}
                         </div>
                         <div>
                             <label>
                                 <strong>Status:</strong>
                             </label>{" "}
-                            {currentDevice.devStatus ? "Enabled" : "Disabled"}
+                            {currentDevice.devStatus ? "enabled" : "disabled"}
                         </div>
 
                         <Link
                             to={"device/" + currentDevice.id}
-                            className="m-3 btn btn-sm btn-danger"
+                            className="btn btn-success"
                         >
                             Edit
                         </Link>

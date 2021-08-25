@@ -7,9 +7,10 @@ const Device = (props) => {
     const initialDeviceState = {
         id: null,
         deviceId: "",
-        description: "",
+        freeDescription: "",
         devStatus: true
     };
+
     const [currentDevice, setCurrentDevice] = useState(initialDeviceState);
     const [message, setMessage] = useState("");
 
@@ -39,7 +40,7 @@ const Device = (props) => {
         const data = {
             id: currentDevice.id,
             deviceId: currentDevice.deviceId,
-            description: currentDevice.description,
+            freeDescription: currentDevice.freeDescription,
             devStatus: status
         };
 
@@ -90,13 +91,13 @@ const Device = (props) => {
                             {currentDevice.deviceId}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="description">Description</label>
+                            <label htmlFor="freeDescription"><strong>Notes/Description</strong></label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="description"
-                                name="description"
-                                value={currentDevice.description}
+                                id="freeDescription"
+                                name="freeDescription"
+                                value={currentDevice.freeDescription}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -105,7 +106,7 @@ const Device = (props) => {
                             <label>
                                 <strong>Status:</strong>
                             </label>
-                            {currentDevice.devStatus ? "Enabled" : "Disabled"}
+                            {currentDevice.devStatus ? "enabled" : "disabled"}
                         </div>
                     </form>
 
@@ -118,7 +119,7 @@ const Device = (props) => {
                         </button>
                     ) : (
                         <button
-                            className="m-3 btn btn-sm btn-danger"
+                            className="btn btn-success"
                             onClick={() => updateStatus(true)}
                         >
                             Enable

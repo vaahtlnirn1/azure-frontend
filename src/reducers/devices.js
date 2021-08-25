@@ -16,6 +16,7 @@ const deviceReducer = (devices = initialState, action) => {
             return [...devices, payload];
 
         case RETRIEVE_DEVICES:
+            console.log("Handler success!");
             return payload;
 
         case UPDATE_DEVICE:
