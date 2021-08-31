@@ -8,9 +8,9 @@ import {
 
 import DeviceDataService from "../services/device.service";
 
-export const createDevice = (id, description) => async (dispatch) => {
+export const createDevice = (deviceId, description) => async (dispatch) => {
     try {
-        const res = await DeviceDataService.createDevice({ id, description });
+        const res = await DeviceDataService.createDevice({ deviceId, description });
 
         dispatch({
             type: CREATE_DEVICE,
@@ -37,10 +37,8 @@ export const retrieveDevices = () => async (dispatch) => {
 };
 
 export const retrieveSyncDevices = () => async (dispatch) => {
-    console.log("retrieveSyncDevices")
     try {
         const res = await DeviceDataService.retrieveSyncDevices();
-        console.log("dispatching")
         dispatch({
             type: RETRIEVE_DEVICES,
             payload: res.data,
@@ -90,18 +88,5 @@ export const deleteAllDevices = () => async (dispatch) => {
         return Promise.resolve(res.data);
     } catch (err) {
         return Promise.reject(err);
-    }
-};
-
-export const findDevicesByTitle = (deviceId) => async (dispatch) => {
-    try {
-        const res = await DeviceDataService.findDevicesByTitle(deviceId);
-        console.log("findDevicesByTitle dispatch")
-        dispatch({
-            type: RETRIEVE_DEVICES,
-            payload: res.data,
-        });
-    } catch (err) {
-        console.log(err);
     }
 };

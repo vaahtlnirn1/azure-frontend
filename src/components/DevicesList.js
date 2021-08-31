@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     retrieveDevices,
     retrieveSyncDevices,
-    findDevicesByTitle,
     deleteDevice,
     deleteAllDevices,
 } from "../actions/devices";
@@ -13,15 +12,20 @@ const DevicesList = () => {
     const [currentDevice, setCurrentDevice] = useState(null);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     const devices = useSelector(state => state.devices);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(retrieveDevices());
+    useEffect (() => {
+        dispatch(retrieveDevices())
         // eslint-disable-next-line
     }, []);
 
+    useEffect(() => {
+        const results = devices.filter(device => device.deviceId.toString().toLowerCase().includes(searchTitle.toLowerCase()));
+        setSearchResults(results);
+    }, [devices, searchTitle]);
 
     const onChangeSearchTitle = e => {
         const searchTitle = e.target.value;
@@ -69,12 +73,6 @@ const DevicesList = () => {
             });
     };
 
-    const findByTitle = () => {
-        refreshData();
-        dispatch(findDevicesByTitle(searchTitle));
-        console.log(searchTitle);
-    };
-
     return (
         <div className="list row">
             <div className="col-md-8">
@@ -86,15 +84,6 @@ const DevicesList = () => {
                         value={searchTitle}
                         onChange={onChangeSearchTitle}
                     />
-                    <div className="input-group-append">
-                        <button
-                            className="btn btn-outline-secondary"
-                            type="button"
-                            onClick={findByTitle}
-                        >
-                            Search
-                        </button>
-                    </div>
                 </div>
             </div>
             <div className="col-md-6">
@@ -102,7 +91,7 @@ const DevicesList = () => {
 
                 <ul className="list-group">
                     {devices &&
-                    devices.map((device, index) => (
+                    searchResults.map((device, index) => (
                         <li
                             className={
                                 "list-group-item " + (index === currentIndex ? "active" : "")
@@ -114,19 +103,8 @@ const DevicesList = () => {
                         </li>
                     ))}
                 </ul>
-                <button
-                    className="btn btn-success"
-                    onClick={retrieveSyncedDevices}
-                >
-                    Synchronize With IoT Hub
-                </button>
-
-                <button
-                    className="m-3 btn btn-sm btn-danger"
-                    onClick={removeAllDevices}
-                >
-                    Delete All Devices
-                </button>
+                <br></br>
+                <br></br>
             </div>
             <div className="col-md-6">
                 {currentDevice ? (
@@ -167,6 +145,22 @@ const DevicesList = () => {
                         <p>Click a device to expand options</p>
                     </div>
                 )}
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <button
+                    className="btn btn-success"
+                    onClick={retrieveSyncedDevices}
+                >
+                    Synchronize Database With IoT Hub
+                </button>
+                <button
+                    className="m-3 btn btn-sm btn-danger"
+                    onClick={removeAllDevices}
+                >
+                    Delete All Devices
+                </button>
             </div>
         </div>
     );

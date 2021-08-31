@@ -42,6 +42,7 @@ const Device = (props) => {
             deviceId: currentDevice.deviceId,
             freeDescription: currentDevice.freeDescription,
             devStatus: status
+
         };
 
         dispatch(updateDevice(currentDevice.id, data))
@@ -138,6 +139,13 @@ const Device = (props) => {
                         Update
                     </button>
                     <p>{message}</p>
+
+                    <div className="form-group">
+                        <label>
+                            <strong>Twin:</strong>
+                        </label>
+                        {}
+                    </div>
                 </div>
             ) : (
                 <div>

@@ -37,20 +37,14 @@ const deleteAllDevices = () => {
     return axios.delete(API_URL + `devices`, { headers: authHeader() });
 };
 
-const findDevicesByTitle = deviceId => {
-    // eslint-disable-next-line
-    return axios.get(API_URL + `devices?deviceId=${deviceId}`, { headers: authHeader() });
-};
-
-const DeviceService = {
+const DeviceDataService = {
     retrieveDevices,
     retrieveSyncDevices,
     retrieveDevice,
     createDevice,
     updateDevice,
     deleteDevice,
-    deleteAllDevices,
-    findDevicesByTitle
+    deleteAllDevices
 };
 
-export default DeviceService;
+export default DeviceDataService;
