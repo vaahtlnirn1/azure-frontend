@@ -1,27 +1,10 @@
 import {
-    CREATE_DEVICE,
     RETRIEVE_DEVICES,
     UPDATE_DEVICE,
     DELETE_DEVICE,
     DELETE_ALL_DEVICES,
 } from "./types";
-
 import DeviceDataService from "../services/device.service";
-
-export const createDevice = (deviceId, description) => async (dispatch) => {
-    try {
-        const res = await DeviceDataService.createDevice({ deviceId, description });
-
-        dispatch({
-            type: CREATE_DEVICE,
-            payload: res.data,
-        });
-        console.log(res.data);
-        return Promise.resolve(res.data);
-    } catch (err) {
-        return Promise.reject(err);
-    }
-};
 
 export const retrieveDevices = () => async (dispatch) => {
     try {
@@ -31,6 +14,7 @@ export const retrieveDevices = () => async (dispatch) => {
             type: RETRIEVE_DEVICES,
             payload: res.data,
         });
+
     } catch (err) {
         console.log(err);
     }
@@ -43,6 +27,7 @@ export const retrieveSyncDevices = () => async (dispatch) => {
             type: RETRIEVE_DEVICES,
             payload: res.data,
         });
+
     } catch (err) {
         console.log(err);
     }
@@ -71,6 +56,7 @@ export const deleteDevice = (id) => async (dispatch) => {
             type: DELETE_DEVICE,
             payload: { id },
         });
+
     } catch (err) {
         console.log(err);
     }

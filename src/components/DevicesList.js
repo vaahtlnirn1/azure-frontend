@@ -23,8 +23,7 @@ const DevicesList = () => {
     }, []);
 
     useEffect(() => {
-        const results = devices.filter(device => device.deviceId.toString().toLowerCase().includes(searchTitle.toLowerCase()));
-        setSearchResults(results);
+        setSearchResults(devices.filter(device => device.deviceId.toString().toLowerCase().includes(searchTitle.toLowerCase())));
     }, [devices, searchTitle]);
 
     const onChangeSearchTitle = e => {

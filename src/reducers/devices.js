@@ -1,5 +1,4 @@
 import {
-    CREATE_DEVICE,
     RETRIEVE_DEVICES,
     UPDATE_DEVICE,
     DELETE_DEVICE,
@@ -12,11 +11,8 @@ const deviceReducer = (devices = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case CREATE_DEVICE:
-            return [...devices, payload];
 
         case RETRIEVE_DEVICES:
-            console.log("Handler success!");
             return payload;
 
         case UPDATE_DEVICE:

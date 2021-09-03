@@ -9,7 +9,6 @@ import Dashboard from "./components/Dashboard";
 import UserPage from "./components/UserPage";
 import ModeratorPage from "./components/ModeratorPage";
 import AdminPage from "./components/AdminPage";
-import AddDevice from "./components/AddDevice";
 import Device from "./components/Device";
 import DevicesList from "./components/DevicesList";
 
@@ -64,13 +63,6 @@ const App = () => {
                                     Devices
                               </Link>
                             </li>
-                        )}
-                        {(currentUser && currentUser.roles && ((currentUser.roles.includes("ADMIN")) || (currentUser.roles.includes("PM")))) && (
-                        <li className="nav-item">
-                            <Link to={"/add"} className="nav-link">
-                                Add Device
-                            </Link>
-                        </li>
                         )}
                         {currentUser && (
                             <li className="nav-item">
@@ -132,7 +124,6 @@ const App = () => {
                         <Route path="/pm" component={ModeratorPage} />
                         <Route path="/admin" component={AdminPage} />
                         <Route exact path="/devices" component={DevicesList} />
-                        <Route exact path="/add" component={AddDevice} />
                         <Route exact path="/device/:id" component={Device} />
                     </Switch>
                 </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { updateDevice, deleteDevice } from "../actions/devices";
+import { queryDeviceTwin } from "../actions/twin";
 import DeviceDataService from "../services/device.service";
 
 const Device = (props) => {
@@ -8,19 +9,28 @@ const Device = (props) => {
         id: null,
         deviceId: "",
         freeDescription: "",
-        devStatus: true
+        devStatus: true,
     };
 
     const [currentDevice, setCurrentDevice] = useState(initialDeviceState);
     const [message, setMessage] = useState("");
+    const [currentTwin, setCurrentTwin] = useState([]);
 
     const dispatch = useDispatch();
 
     const getDevice = id => {
-        DeviceDataService.retrieveDevice(id)
+        console.log(initialDeviceState);
+        console.log(id);
+            DeviceDataService.retrieveDevice(id)
             .then(response => {
+                const currentDevice = {
+                    id: response.data.id,
+                    deviceId: response.data.deviceId,
+                    freeDescription: response.data.freeDescription,
+                    devStatus: response.data.devStatus,
+                };
                 setCurrentDevice(response.data);
-                console.log(response.data);
+                console.log(currentDevice);
             })
             .catch(e => {
                 console.log(e);
@@ -29,7 +39,7 @@ const Device = (props) => {
 
     useEffect(() => {
         getDevice(props.match.params.id);
-    }, [props.match.params.id]);
+    }, []);
 
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -41,8 +51,7 @@ const Device = (props) => {
             id: currentDevice.id,
             deviceId: currentDevice.deviceId,
             freeDescription: currentDevice.freeDescription,
-            devStatus: status
-
+            devStatus: status,
         };
 
         dispatch(updateDevice(currentDevice.id, data))
@@ -50,6 +59,7 @@ const Device = (props) => {
                 console.log(response);
 
                 setCurrentDevice({ ...currentDevice, devStatus: status });
+                console.log(currentDevice);
                 setMessage("The status was updated successfully!");
             })
             .catch(e => {
@@ -63,6 +73,18 @@ const Device = (props) => {
                 console.log(response);
                 setMessage("The device was updated successfully!");
                 props.history.push("/devices");
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    };
+
+    const queryTwin = () => {
+        dispatch(queryDeviceTwin(currentDevice.id))
+            .then(response => {
+                console.log(response);
+                setCurrentTwin({ ...currentTwin, twin: response});
+                setMessage("The twin was queried successfully.");
             })
             .catch(e => {
                 console.log(e);
@@ -139,8 +161,13 @@ const Device = (props) => {
                         Update
                     </button>
                     <p>{message}</p>
-
-                    <div className="form-group">
+                    <button
+                        className="btn btn-success"
+                        onClick={queryTwin}
+                    >
+                        Get Device Twin
+                    </button>
+                    <div className="col">
                         <label>
                             <strong>Twin:</strong>
                         </label>

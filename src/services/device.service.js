@@ -17,15 +17,13 @@ const retrieveDevice = id => {
     return axios.get(API_URL + `device/${id}`, { headers: authHeader() });
 };
 
-const createDevice = data => {
-    console.log(data);
-    return axios.post(API_URL + `devices`, data, { headers: authHeader() });
-};
-
 const updateDevice = (id, data) => {
-    console.log(id, data);
     // eslint-disable-next-line
     return axios.put(API_URL + `device/${id}`, data, { headers: authHeader() });
+};
+
+const queryDeviceTwin = (id, data) => {
+    return axios.post(API_URL + `device/${id}`, data, { headers: authHeader() });
 };
 
 const deleteDevice = id => {
@@ -41,8 +39,8 @@ const DeviceDataService = {
     retrieveDevices,
     retrieveSyncDevices,
     retrieveDevice,
-    createDevice,
     updateDevice,
+    queryDeviceTwin,
     deleteDevice,
     deleteAllDevices
 };
