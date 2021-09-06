@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     retrieveDevices,
     retrieveSyncDevices,
-    deleteDevice,
     deleteAllDevices,
 } from "../actions/devices";
 import { Link } from "react-router-dom";
@@ -45,16 +44,6 @@ const DevicesList = () => {
         dispatch(retrieveSyncDevices())
             .then(() => {
                 refreshData();
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    };
-
-    const removeDevice = (props) => {
-        dispatch(deleteDevice(currentDevice.id))
-            .then(() => {
-                props.history.push("/devices");
             })
             .catch(e => {
                 console.log(e);
@@ -134,9 +123,6 @@ const DevicesList = () => {
                         >
                             Edit
                         </Link>
-                        <button className="m-3 btn btn-sm btn-danger" onClick={removeDevice}>
-                            Delete
-                        </button>
                     </div>
                 ) : (
                     <div>

@@ -3,6 +3,20 @@ label {
   margin-top: 10px;
 }
 
+label-twin {
+  display: block;
+  margin-top: 30px;
+  position: relative;
+  left: 382px;
+}
+
+.col {
+  width: 800px;
+  position: relative;
+  left: -250px;
+  top: 30px;
+}
+
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
@@ -45,4 +59,5 @@ label {
 .edit-form {
   max-width: 300px;
   margin: auto;
+  align-content: center;
 }

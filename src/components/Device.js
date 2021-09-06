@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateDevice, deleteDevice } from "../actions/devices";
 import { queryDeviceTwin } from "../actions/twin";
 import DeviceDataService from "../services/device.service";
+import store from "../store.js";
 
 const Device = (props) => {
     const initialDeviceState = {
@@ -39,6 +40,7 @@ const Device = (props) => {
 
     useEffect(() => {
         getDevice(props.match.params.id);
+        // eslint-disable-next-line
     }, []);
 
     const handleInputChange = event => {
@@ -105,16 +107,17 @@ const Device = (props) => {
         <div>
             {currentDevice ? (
                 <div className="edit-form">
-                    <h4>Device</h4>
+                    <br></br>
                     <form>
-                        <div className="form-group">
+                        <div style={{textAlign: 'center', fontSize: '28px'}} className="form-group">
                             <label>
                                 <strong>Device ID:</strong>
                             </label>
                             {currentDevice.deviceId}
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="freeDescription"><strong>Notes/Description</strong></label>
+                        <br></br>
+                        <div style={{textAlign: 'center'}} className="form-group">
+                            <label htmlFor="freeDescription"><strong>Notes/Description:</strong></label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -124,24 +127,23 @@ const Device = (props) => {
                                 onChange={handleInputChange}
                             />
                         </div>
-
-                        <div className="form-group">
+                        <br></br>
+                        <div style={{textAlign: 'center'}} className="form-group">
                             <label>
                                 <strong>Status:</strong>
                             </label>
                             {currentDevice.devStatus ? "enabled" : "disabled"}
                         </div>
                     </form>
-
                     {currentDevice.devStatus ? (
-                        <button
+                        <button style={{position: "relative", left: '10px'}}
                             className="m-3 btn btn-sm btn-danger"
                             onClick={() => updateStatus(false)}
                         >
                             Disable
                         </button>
                     ) : (
-                        <button
+                        <button style={{position: "relative", left: '10px'}}
                             className="btn btn-success"
                             onClick={() => updateStatus(true)}
                         >
@@ -149,29 +151,31 @@ const Device = (props) => {
                         </button>
                     )}
 
-                    <button className="m-3 btn btn-sm btn-danger" onClick={removeDevice}>
+                    <button style={{position: "relative", left: '10px'}} className="m-3 btn btn-sm btn-danger" onClick={removeDevice}>
                         Delete
                     </button>
 
-                    <button
+                    <button style={{position: "relative", left: '10px'}}
                         type="submit"
                         className="btn btn-success"
                         onClick={updateContent}
                     >
                         Update
                     </button>
-                    <p>{message}</p>
-                    <button
+                    <br></br>
+                    <br></br>
+                    <p style={{textAlign: 'center'}}>{message}</p>
+                    <button style={{position: "relative", left: '80px'}}
                         className="btn btn-success"
                         onClick={queryTwin}
                     >
                         Get Device Twin
                     </button>
                     <div className="col">
-                        <label>
+                        <label-twin>
                             <strong>Twin:</strong>
-                        </label>
-                        {}
+                        </label-twin>
+                        <pre>{JSON.stringify(store.getState().twin, null, 4)}</pre>
                     </div>
                 </div>
             ) : (

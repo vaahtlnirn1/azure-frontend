@@ -13,7 +13,6 @@ import Device from "./components/Device";
 import DevicesList from "./components/DevicesList";
 
 import { logout } from "./actions/auth";
-import { clearMessage } from "./actions/message";
 
 import { history } from "./helpers/history";
 
@@ -24,12 +23,6 @@ const App = () => {
 
     const { user: currentUser } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        history.listen((location) => {
-            dispatch(clearMessage()); // clear message when changing location
-        });
-    }, [dispatch]);
 
     useEffect(() => {
         if (currentUser) {
@@ -51,13 +44,6 @@ const App = () => {
                     </Link>
                     <div className="navbar-nav mr-auto">
                         {currentUser && (
-                        <li className="nav-item">
-                            <Link to={"/"} className="nav-link">
-                                Home
-                            </Link>
-                        </li>
-                        )}
-                        {currentUser && (
                             <li className="nav-item">
                                 <Link to={"/devices"} className="nav-link">
                                     Devices
@@ -67,7 +53,7 @@ const App = () => {
                         {currentUser && (
                             <li className="nav-item">
                                 <Link to={"/dashboard"} className="nav-link">
-                                    My Dashboard
+                                    Dashboard
                                 </Link>
                             </li>
                         )}
@@ -120,6 +106,7 @@ const App = () => {
                     <Switch>
                         <Route exact path="/signin" component={Login} />
                         <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/" component={Dashboard} />
                         <Route path="/user" component={UserPage} />
                         <Route path="/pm" component={ModeratorPage} />
                         <Route path="/admin" component={AdminPage} />
