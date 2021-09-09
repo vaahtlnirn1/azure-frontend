@@ -61,3 +61,14 @@ label-twin {
   margin: auto;
   align-content: center;
 }
+
+.col-md-6 device {
+  min-height: 100vh;
+  height: 2500px;
+  position: relative;
+}
+
+.col-md-6 device_object {
+  position: fixed;
+  top: 50px;
+}

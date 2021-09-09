@@ -12,6 +12,7 @@ const DevicesList = () => {
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [searchTitle, setSearchTitle] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [message, setMessage] = useState("");
 
     const devices = useSelector(state => state.devices);
     const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const DevicesList = () => {
         dispatch(retrieveSyncDevices())
             .then(() => {
                 refreshData();
+                setMessage("The data was synced with IoT Hub successfully.");
             })
             .catch(e => {
                 console.log(e);
@@ -55,6 +57,7 @@ const DevicesList = () => {
             .then(response => {
                 console.log(response);
                 refreshData();
+                setMessage("All devices have been deleted successfully.");
             })
             .catch(e => {
                 console.log(e);
@@ -64,7 +67,7 @@ const DevicesList = () => {
     return (
         <div className="list row">
             <div className="col-md-8">
-                <div className="input-group mb-3">
+                <div  className="input-group mb-3">
                     <input
                         type="text"
                         className="form-control"
@@ -94,7 +97,7 @@ const DevicesList = () => {
                 <br></br>
                 <br></br>
             </div>
-            <div className="col-md-6">
+            <div style={{ position: "fixed", right: "-20px", top: "160px" }} className="col-md-6 device">
                 {currentDevice ? (
                     <div>
                         <h4>Device</h4>
@@ -116,7 +119,7 @@ const DevicesList = () => {
                             </label>{" "}
                             {currentDevice.devStatus ? "enabled" : "disabled"}
                         </div>
-
+                        <br></br>
                         <Link
                             to={"device/" + currentDevice.id}
                             className="btn btn-success"
@@ -127,11 +130,9 @@ const DevicesList = () => {
                 ) : (
                     <div>
                         <br />
-                        <p>Click a device to expand options</p>
+                        <p>Click a device to expand options and/or write Device ID in the search bar to find desired device.</p>
                     </div>
                 )}
-                <br></br>
-                <br></br>
                 <br></br>
                 <br></br>
                 <button
@@ -140,6 +141,9 @@ const DevicesList = () => {
                 >
                     Synchronize Database With IoT Hub
                 </button>
+                <br></br>
+                <br></br>
+                <p>{message}</p>
                 <button
                     className="m-3 btn btn-sm btn-danger"
                     onClick={removeAllDevices}
